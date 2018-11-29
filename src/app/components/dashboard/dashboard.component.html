@@ -1,0 +1,55 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 col-sm-12">
+      <div class="row">
+        <div class="col-12" style="color:white; background-color: black; text-align: center">ABILITY SCORES</div>
+      </div>
+      <div class="row" style="font-size:11px; white-space: nowrap;overflow: hidden; text-align: center">
+        <div class="col-2"></div>
+        <div class="col-2">SCORE</div>
+        <div class="col-2">MODIFIER</div>
+        <div class="col-2">BONUS</div>
+        <div class="col-2">PENALTY</div>
+        <div class="col-2">TEMP MOD</div>
+      </div>
+      <div *ngFor="let a of abilities; index as i" class="row" style="text-align: center; margin-bottom: 5px">
+        <div class="col-2" style="color:white; background-color: black; text-align: center">{{a.shortNm}} <p style="font-size:8px;margin-bottom: 2px">{{a.name}}</p></div>
+        <div class="col-2 case"><p>{{character?.abilities[i].value}}</p>
+          <p *ngIf="editMode" style="margin-top: -8px">
+            <i *ngIf="character?.abilities[i].value < 46" class="arrow up" style="float:right; margin-top: -10px"
+               (click)="updateModPlus(i, character?.abilities[i].value);"></i>
+            <i *ngIf="character?.abilities[i].value > 0" class="arrow down" style="float:right"
+               (click)="updateModMinus(i, character?.abilities[i].value);"></i>
+          </p>
+        </div>
+        <div class="col-2 case"><p>{{character?.abilities[i].modifier}}</p></div>
+        <div class="col-2 case"><p>{{character?.abilities[i].bonus}}</p></div>
+        <div class="col-2 case"><p>{{character?.abilities[i].penalty}}</p></div>
+        <div class="col-2 case"></div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-2">
+      <div class="row">
+        <div class="col-12" style="color:white; background-color: black; text-align: center">HIT POINTS</div>
+      </div>
+    </div>
+
+    <div style="border: 3px black solid" class="col-md-5 col-sm-12">
+      <div class="row">
+        <div class="col-12" style="color:white; background-color: black; text-align: center">BASIC INFORMATIONS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12" style="color:white; background-color: black; text-align: center">SKILLS</div>
+      </div>
+    </div>
+  </div>
+</div>
+<button *ngIf="!editMode" (click)="editMode = !editMode">Edit</button>
+<button *ngIf="editMode" (click)="editMode = !editMode">Save</button>
