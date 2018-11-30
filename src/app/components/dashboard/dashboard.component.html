@@ -14,7 +14,7 @@
         <div class="col-2">TEMP MOD</div>
       </div>
       <div *ngFor="let a of abilities; index as i" class="row" style="text-align: center; margin-bottom: 5px">
-        <div class="col-2" style="color:white; background-color: black; text-align: center">{{a.shortNm}} <p style="font-size:8px;margin-bottom: 2px">{{a.name}}</p></div>
+        <div class="col-2" style="color:white; background-color: black; text-align: center" [matTooltip]="a.description">{{a.shortNm}} <p style="font-size:8px;margin-bottom: 2px">{{a.name}}</p></div>
         <div class="col-2 case"><p>{{character?.abilities[i].value}}</p>
           <p *ngIf="editMode" style="margin-top: -8px">
             <i *ngIf="character?.abilities[i].value < 46" class="arrow up" style="float:right; margin-top: -10px"

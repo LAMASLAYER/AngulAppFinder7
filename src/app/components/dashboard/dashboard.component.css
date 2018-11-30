@@ -27,3 +27,9 @@ i {
  margin-top: 4px;
   margin-bottom: 0;
 }
+
+::ng-deep .mat-tooltip {
+  opacity: 1;
+  color:black;
+  background-color:grey;
+}

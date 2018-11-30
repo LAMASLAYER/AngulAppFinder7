@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {AbilitiesService} from '../../services/abilities/abilities.service';
-import {Dashboard} from '../../interfaces/dashboard';
 import {Abilities} from '../../models/abilities';
 import {Character} from '../../models/character';
 import {CharactersService} from '../../services/characters/characters.service';
@@ -11,7 +10,7 @@ import {CharAbilities} from '../../models/charAbilities';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, Dashboard {
+export class DashboardComponent implements OnInit {
 
   private abilitiesService: AbilitiesService;
   public abilities: Array<Abilities>;
@@ -78,4 +77,5 @@ export class DashboardComponent implements OnInit, Dashboard {
         console.log(error);
       });
   }
+
 }

@@ -5,6 +5,10 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatTooltipModule} from '@angular/material';
+import 'hammerjs';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -20,6 +24,8 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'}),
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatTooltipModule,
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

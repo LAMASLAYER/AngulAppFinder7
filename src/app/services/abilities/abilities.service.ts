@@ -3,7 +3,6 @@ import {Tools} from '../../utils/tools';
 import {Observable} from 'rxjs';
 import {Abilities} from '../../models/abilities';
 import {HttpClient} from '@angular/common/http';
-import {CharAbilities} from '../../models/charAbilities';
 
 
 @Injectable({
@@ -28,10 +27,6 @@ export class AbilitiesService {
       .pipe(res => {
         return res;
       });
-  }
-
-  public saveAbilities(charAbility: Abilities) {
-    return this.http.post(Tools.SERVER + '/abilities/post', charAbility);
   }
 
 }
