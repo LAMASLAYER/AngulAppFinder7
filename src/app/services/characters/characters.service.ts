@@ -16,6 +16,7 @@ export class CharactersService {
   }
 
   public getCharacter(id: number): Observable<Character> {
+    Tools.CHARACTER = id;
     return this.http.get<Character>(Tools.SERVER + '/charBuilder/charId/' + id)
       .pipe(res => {
         return res;

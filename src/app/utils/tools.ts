@@ -5,4 +5,5 @@ import { Injectable } from '@angular/core';
 })
 export class Tools {
   static SERVER = 'https://pathfinderappfinder.herokuapp.com';
+  static CHARACTER: number;
 }

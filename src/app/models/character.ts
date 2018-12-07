@@ -8,6 +8,7 @@ import {Wealth} from './wealth';
 import {RaceTraits} from './raceTraits';
 
 export class Character {
+  charId: number;
   abilities: Array<Abilities>;
   age: number;
   alignment: string;
