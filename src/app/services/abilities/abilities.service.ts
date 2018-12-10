@@ -30,8 +30,8 @@ export class AbilitiesService {
       });
   }
 
-  private getAbilityId(charId: number, abilityId: number): Observable<number> {
-    return this.http.get<number>(Tools.SERVER + '/charAbilities/charId/' + charId + '/abilityId/' + abilityId)
+  private getAbilityId(charId: number, abilityId: number): Observable<CharAbilities> {
+    return this.http.get<CharAbilities>(Tools.SERVER + '/charAbilities/charId/' + charId + '/abilityId/' + abilityId)
       .pipe(res => {
         return res;
       });
@@ -39,15 +39,15 @@ export class AbilitiesService {
 
   public updateAbilities(charAbilities: CharAbilities): void {
     this.getAbilityId(charAbilities.charId, charAbilities.abilityId).subscribe(
-      res => {
-        this.updateRow(res['charAbilityId'], charAbilities).subscribe();
+      (res: CharAbilities) => {
+        this.updateRow(res.charAbilityId, charAbilities).subscribe();
       }
     );
   }
 
-  public updateRow(charAbilityId: number, charAbilities: CharAbilities): any {
+  public updateRow(charAbilityId: number, charAbilities: CharAbilities): Observable<CharAbilities> {
     charAbilities.charAbilityId = charAbilityId;
-    return this.http.post(Tools.SERVER + '/charAbilities/post', charAbilities);
+    return this.http.post<CharAbilities>(Tools.SERVER + '/charAbilities/post', charAbilities);
   }
 
 }
