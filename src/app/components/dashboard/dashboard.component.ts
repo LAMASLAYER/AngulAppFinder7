@@ -5,6 +5,9 @@ import {Character} from '../../models/character';
 import {CharactersService} from '../../services/characters/characters.service';
 import {Tools} from '../../utils/tools';
 import {CharAbilities} from '../../models/charAbilities';
+import {Skills} from '../../models/skills';
+import {SkillsService} from '../../services/skills/skills.service';
+import {CharSkills} from '../../models/charSkills';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,15 +24,24 @@ export class DashboardComponent implements OnInit {
   private updatedAbilities: boolean;
   private updatedAbilitiesList: Array<CharAbilities>;
   private charAbilityIds: Array<number>;
+  public skills: Array<Skills>;
+  private skillsService: SkillsService;
+  public charSkills: Array<CharSkills>;
 
-  constructor(abilitiesService: AbilitiesService, charactersService: CharactersService) {
+  constructor(
+    abilitiesService: AbilitiesService,
+    charactersService: CharactersService,
+    skillsService: SkillsService
+  ) {
     this.abilitiesService = abilitiesService;
     this.charactersService = charactersService;
+    this.skillsService = skillsService;
   }
 
   ngOnInit() {
     this._editMode = false;
     this.charAbilityIds = [];
+    this.charSkills = [];
     this.updatedAbilitiesList = new Array<CharAbilities>();
     this.getAbilities();
     this.getCharacter();
@@ -55,6 +67,7 @@ export class DashboardComponent implements OnInit {
     this.charactersService.getCharacter(1).subscribe(
       res => {
         this.character = res;
+        this.getSkills(this.character.skills, this.character.abilities);
         console.log(this.character);
       },
       error => {
@@ -96,7 +109,7 @@ export class DashboardComponent implements OnInit {
           const tempAbility = new CharAbilities();
           tempAbility.charId = Tools.CHARACTER;
           tempAbility.abilityId = abilityId;
-          tempAbility.abilityValue = value -1;
+          tempAbility.abilityValue = value - 1;
           this.updatedAbilitiesList.push(tempAbility);
           this.charAbilityIds.push(abilityId);
         } else {
@@ -125,5 +138,48 @@ export class DashboardComponent implements OnInit {
     for (let i = 0; i < charAbilities.length; i++) {
       this.abilitiesService.updateAbilities(charAbilities[i]);
     }
+  }
+
+  private getSkills(charSkills: Array<Skills>, abilities: Array<Abilities>): void {
+    this.skillsService.getAllSkills().subscribe(
+      data => {
+        let pushed: boolean;
+        for (let i = 0; i < data.length; i++) {
+          pushed = false;
+          for (let j = 0; j < charSkills.length; j++) {
+            if (data[i].skillId === charSkills[j].skillId) {
+              pushed = true;
+              const tempSkills = new CharSkills();
+              tempSkills.primaryStat = charSkills[j].primaryStat;
+              tempSkills.name = charSkills[j].name;
+              tempSkills.checked = true;
+              tempSkills.description = charSkills[j].description;
+              for (let k = 0; k < this.abilities.length; k ++) {
+                if (tempSkills.primaryStat === abilities[k].shortNm) {
+                  tempSkills.modifier = abilities[k].modifier;
+                  tempSkills.total = abilities[k].modifier;
+                }
+              }
+              this.charSkills.push(tempSkills);
+            }
+          }
+          if (pushed !== true) {
+            const tempSkills = new CharSkills();
+            tempSkills.primaryStat = data[i].primaryStat;
+            tempSkills.name = data[i].name;
+            tempSkills.checked = false;
+            tempSkills.description = data[i].description;
+            for (let k = 0; k < this.abilities.length; k ++) {
+              if (tempSkills.primaryStat === abilities[k].shortNm) {
+                tempSkills.modifier = abilities[k].modifier;
+                tempSkills.total = abilities[k].modifier;
+              }
+            }
+            this.charSkills.push(tempSkills);
+          }
+        }
+        console.log(this.charSkills);
+      }
+    );
   }
 }
